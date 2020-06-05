@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Image, SafeAreaView, Alert } from 'react-native'
 import { Feather as Icon } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import MapView, { Marker } from 'react-native-maps'
 import { SvgUri } from 'react-native-svg'
 import api from '../../services/api'
@@ -21,13 +21,21 @@ interface Point {
     longitude: number;
 }
 
+interface Params {
+    uf: string,
+    city: string
+}
+
 const Points = () => {
     const navigation = useNavigation();
+    const route = useRoute()
 
     const [items, setItems] = useState<Item[]>([])
     const [selectedItems, setSelectedItems] = useState<number[]>([])
     const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0])
     const [points, setPoints] = useState<Point[]>([])
+    
+    const routeParams = route.params as Params
 
     useEffect(() => {
         api.get('items').then(response => {
@@ -58,20 +66,20 @@ const Points = () => {
     useEffect(() => {
         api.get('points', {
             params: {
-                city: 'Araçariguama',
-                uf: 'SP',
-                items: [1]
+                city: routeParams.city,
+                uf: routeParams.uf,
+                items: selectedItems
             }
         }).then(response => {
             setPoints(response.data)
         })
-    }, [])
+    }, [selectedItems])
 
     function handleNavigateBack() {
         navigation.goBack();
     }
-    function handleNavigateToDetail() {
-        navigation.navigate('Detail');
+    function handleNavigateToDetail(id: number) {
+        navigation.navigate('Detail', { point_id: id });
     }
     function handleSelectItem(id: number) {
         const alreadySelected = selectedItems.findIndex(item => item === id);
@@ -106,7 +114,7 @@ const Points = () => {
                                 <Marker
                                     key={String(point.id)}
                                     style={styles.mapMarker}
-                                    onPress={handleNavigateToDetail}
+                                    onPress={() => handleNavigateToDetail(point.id)}
                                     coordinate={{
                                         latitude: point.latitude,
                                         longitude: point.longitude,
@@ -133,7 +141,7 @@ const Points = () => {
                             style={[
                                 styles.item,
                                 selectedItems.includes(item.id) ? styles.selectedItem : {}]}
-                            onPress={() => { () => handleSelectItem(item.id) }}
+                            onPress={() => {handleSelectItem(item.id) }}
                             activeOpacity={0.5}>
                             <SvgUri width={42} height={42} uri={item.image_url} />
                             <Text style={styles.itemTitle}>{item.title}</Text>
