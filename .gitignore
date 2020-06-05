@@ -1,3 +1,7 @@
+uploads/*
+!uploads/.gitkeep
+*.sqlite
+
 # Logs
 logs
 *.log
