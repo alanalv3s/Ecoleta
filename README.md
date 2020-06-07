@@ -22,7 +22,6 @@
 </p>
 
 <p align="center">
-  <a href="#-nlw">Next Level Week</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#rocket-Technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -38,7 +37,7 @@ That aims to connect people to companies that collect specific waste such as lig
 
 ### Web:
 <h1 align="center">
-    <img alt="Example" title="Example" src="https://ik.imagekit.io/alanalv3s/Ecoleta_web_yrKSrqkdt.gif"/>
+    <img alt="Example" title="Example" src="./.github/Ecoleta_web.gif"/>
 </h1>
 
 ### Mobile:
